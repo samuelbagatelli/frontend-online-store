@@ -1,9 +1,6 @@
 import React from 'react';
-<<<<<<< Updated upstream
-import Categories from '../components/Categories';
-=======
 import { Link } from 'react-router-dom';
->>>>>>> Stashed changes
+import Categories from '../components/Categories';
 
 class Search extends React.Component {
   constructor() {
