@@ -1,4 +1,5 @@
 import React from 'react';
+import Categories from '../components/Categories';
 
 class Search extends React.Component {
   constructor() {
@@ -20,6 +21,8 @@ class Search extends React.Component {
 
     return (
       <div>
+        <Categories />
+        {/* coloquei o component aqui para renderizar e passar o teste.  */}
         <input
           onChange={ this.handleInput }
         />
