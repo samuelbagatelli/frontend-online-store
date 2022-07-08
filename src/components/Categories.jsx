@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 class Categories extends React.Component {
   constructor(props) {
@@ -7,6 +7,7 @@ class Categories extends React.Component {
 
     this.state = {
       categories: [],
+      category: '',
     };
   }
 
@@ -19,8 +20,13 @@ class Categories extends React.Component {
     this.setState({ categories });
   }
 
+  handleChange = async (id) => {
+    const getCategory = await getProductsFromCategoryAndQuery(id);
+    return this.setState({ category: getCategory.results });
+  }
+
   render() {
-    const { categories } = this.state;
+    const { categories, category } = this.state;
     return (
       <div>
         <h2>Categorias:</h2>
@@ -32,9 +38,22 @@ class Categories extends React.Component {
                 data-testid="category"
                 id={ id }
                 name="categories"
+                onChange={ () => { this.handleChange(id); } }
               />
               {name}
-            </label>))
+            </label>
+          ))
+        }
+        {
+          category && category.map(({ title, price, thumbnail, id }) => (
+            <div
+              data-testid="product"
+              key={ id }
+            >
+              <img src={ thumbnail } alt={ title } />
+              <strong>{price}</strong>
+              <h2>{title}</h2>
+            </div>))
         }
 
       </div>
