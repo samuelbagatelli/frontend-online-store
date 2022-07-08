@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 class ShoppingCart extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       cartProducts: [],
