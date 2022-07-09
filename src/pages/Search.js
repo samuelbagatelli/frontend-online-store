@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Categories from '../components/Categories';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 
-import ProductsQuery from './components/ProductQuery';
+import ProductsQuery from '../components/ProductQuery';
 
 class Search extends React.Component {
   constructor() {
