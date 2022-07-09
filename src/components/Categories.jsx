@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 class Categories extends React.Component {
@@ -21,8 +22,10 @@ class Categories extends React.Component {
   }
 
   handleChange = async (id) => {
+    const { setStateProductsFromCategory } = this.props;
     const getCategory = await getProductsFromCategoryAndQuery(id);
-    return this.setState({ category: getCategory.results });
+    // this.setState({ category: getCategory.results });
+    setStateProductsFromCategory(getCategory);
   }
 
   render() {
@@ -61,5 +64,9 @@ class Categories extends React.Component {
     );
   }
 }
+
+Categories.propTypes = {
+  setStateProductsFromCategory: PropTypes.func.isRequired,
+};
 
 export default Categories;

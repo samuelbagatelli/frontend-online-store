@@ -22,7 +22,7 @@ class Search extends React.Component {
     this.setState({ inputValue: value });
   }
 
-  setStateProductsFromCategoryAndQuery = async () => {
+  setStateProductsFromQuery = async () => {
     const { inputValue } = this.state;
     const { results } = await getProductsFromCategoryAndQuery('', inputValue);
 
@@ -39,12 +39,19 @@ class Search extends React.Component {
     });
   }
 
+  setStateProductsFromCategory = ({ results }) => {
+    this.setState({
+      stateProductsQuery: results,
+      totalProducts: results.length,
+    });
+  }
+
   render() {
     const { inputValue, stateProductsQuery, totalProducts } = this.state;
 
     return (
       <div>
-        <Categories />
+        <Categories setStateProductsFromCategory={ this.setStateProductsFromCategory } />
         {/* coloquei o component aqui para renderizar e passar o teste.  */}
         <input
           data-testid="query-input"
@@ -53,7 +60,7 @@ class Search extends React.Component {
         <button
           type="button"
           data-testid="query-button"
-          onClick={ this.setStateProductsFromCategoryAndQuery }
+          onClick={ this.setStateProductsFromQuery }
         >
           Pesquisar
         </button>
@@ -76,7 +83,6 @@ class Search extends React.Component {
         { stateProductsQuery !== ''
           && stateProductsQuery
             .map(({ title, thumbnail, price, id }) => (<ProductsQuery
-              // data-testid="product"
               key={ id }
               title={ title }
               thumbnail={ thumbnail }
