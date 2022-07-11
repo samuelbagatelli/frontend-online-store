@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Categories from '../components/Categories';
 import { getProductsFromCategoryAndQuery } from '../services/api';
-
 import '../styles/Search.css';
-
 import ProductsQuery from '../components/ProductQuery';
 
 class Search extends React.Component {
@@ -50,6 +49,7 @@ class Search extends React.Component {
 
   render() {
     const { inputValue, stateProductsQuery, totalProducts } = this.state;
+    const { addToCart } = this.props;
 
     return (
       <div className="Search">
@@ -95,6 +95,7 @@ class Search extends React.Component {
                   title={ title }
                   thumbnail={ thumbnail }
                   price={ price }
+                  addToCart={ () => addToCart('', title, thumbnail, price) }
                 />)) }
           </section>
           { totalProducts === 0 && <p>Nenhum produto foi encontrado</p> }
@@ -103,5 +104,9 @@ class Search extends React.Component {
     );
   }
 }
+
+Search.propTypes = {
+  addToCart: PropTypes.func.isRequired,
+};
 
 export default Search;

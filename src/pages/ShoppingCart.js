@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ShoppingCart extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      cartProducts: [],
-    };
-  }
-
   render() {
-    const { cartProducts } = this.state;
+    const { cartItems } = this.props;
 
     return (
       <div className="ShoppingCart">
-        { cartProducts.length
-          ? (<p>Test</p>)
+        { cartItems.length
+          ? (
+            <div>
+              {
+                cartItems.map(({ title, thumbnail, price }, idx) => (
+                  <div key={ idx }>
+                    <h3 data-testid="shopping-cart-product-name">{title}</h3>
+                    <img src={ thumbnail } alt={ title } />
+                    <h3>{ `R$ ${price}` }</h3>
+                    <p data-testid="shopping-cart-product-quantity">Quantidade: {}</p>
+                  </div>
+                ))
+              }
+            </div>
+          )
           : (
             <p data-testid="shopping-cart-empty-message">
               Seu carrinho está vazio
@@ -25,5 +31,9 @@ class ShoppingCart extends Component {
     );
   }
 }
+
+ShoppingCart.propTypes = {
+  cartItems: PropTypes.arrayOf.isRequired,
+};
 
 export default ShoppingCart;
