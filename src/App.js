@@ -10,22 +10,30 @@ class App extends React.Component {
     super();
 
     this.state = {
-      cartItems: '',
+      cartItems: [],
+      quantity: 1,
     };
   }
 
   addToCart = (_event, title, thumbnail, price) => {
-    const { cartItems } = this.state;
+    const { cartItems, quantity } = this.state;
+
     this.setState({ cartItems: [...cartItems, {
       title,
       thumbnail,
       price,
     }],
+    }, () => {
+      const teste = cartItems.some((element) => element.title === title);
+
+      if (teste) {
+        this.setState({ quantity: quantity + 1 });
+      }
     });
   }
 
   render() {
-    const { cartItems } = this.state;
+    const { cartItems, quantity } = this.state;
 
     return (
       <div className="App">
@@ -34,6 +42,7 @@ class App extends React.Component {
             <Route path="/shopping-cart">
               <ShoppingCart
                 cartItems={ cartItems }
+                quantity={ quantity }
               />
             </Route>
             <Route exact path="/">

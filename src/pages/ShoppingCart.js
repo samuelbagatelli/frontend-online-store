@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class ShoppingCart extends Component {
   render() {
-    const { cartItems } = this.props;
+    const { cartItems, quantity } = this.props;
 
     return (
       <div className="ShoppingCart">
@@ -16,7 +16,10 @@ class ShoppingCart extends Component {
                     <h3 data-testid="shopping-cart-product-name">{title}</h3>
                     <img src={ thumbnail } alt={ title } />
                     <h3>{ `R$ ${price}` }</h3>
-                    <p data-testid="shopping-cart-product-quantity">Quantidade: {}</p>
+                    <p data-testid="shopping-cart-product-quantity">
+                      Quantidade:
+                      { quantity }
+                    </p>
                   </div>
                 ))
               }
@@ -34,6 +37,7 @@ class ShoppingCart extends Component {
 
 ShoppingCart.propTypes = {
   cartItems: PropTypes.arrayOf.isRequired,
+  quantity: PropTypes.number.isRequired,
 };
 
 export default ShoppingCart;
