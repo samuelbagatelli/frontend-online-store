@@ -12,6 +12,7 @@ class App extends React.Component {
 
     this.state = {
       productDetail: [],
+      productAddCart: [],
     };
   }
 
@@ -19,18 +20,33 @@ class App extends React.Component {
     this.setState({ productDetail: [title, thumbnail, price, attributes] });
   }
 
+  setStateCart = (title, price, quantity) => {
+    const object = {
+      title,
+      price,
+    };
+    this.setState((prevState) => ({
+      productAddCart: [...prevState.productAddCart, object],
+    }));
+  }
+
   render() {
-    const { productDetail } = this.state;
+    const { productDetail, productAddCart } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
           <Switch>
-            <Route path="/shopping-cart" component={ ShoppingCart } />
+            <Route path="/shopping-cart">
+              <ShoppingCart productAddCart={ productAddCart } />
+            </Route>
             <Route exact path="/">
               <Search setStateApp={ this.setStateApp } />
             </Route>
             <Route path="/product-detail">
-              <ProductDetail productDetail={ productDetail } />
+              <ProductDetail
+                productDetail={ productDetail }
+                setStateCart={ this.setStateCart }
+              />
             </Route>
             <Categories />
           </Switch>

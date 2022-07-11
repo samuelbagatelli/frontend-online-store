@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class ProductDetail extends React.Component {
   render() {
-    const { productDetail } = this.props;
+    const { productDetail, setStateCart } = this.props;
     const [title, thumbnail, price, attributes] = productDetail;
     return (
       <div data-testid="product-detail-name">
@@ -15,6 +16,20 @@ class ProductDetail extends React.Component {
             <p key={ id }>{`${name}: ${valueName}`}</p>
           )) }
         </div>
+        <button
+          data-testid="product-detail-add-to-cart"
+          type="button"
+          onClick={ () => setStateCart(title, price) }
+        >
+          Adicionar ao Carrinho
+        </button>
+        <Link to="/shopping-cart">
+          <button
+            type="button"
+          >
+            Ir para Carrinho de compras
+          </button>
+        </Link>
       </div>
     );
   }
@@ -22,6 +37,7 @@ class ProductDetail extends React.Component {
 
 ProductDetail.propTypes = {
   productDetail: PropTypes.arrayOf.isRequired,
+  setStateCart: PropTypes.func.isRequired,
 };
 
 export default ProductDetail;
