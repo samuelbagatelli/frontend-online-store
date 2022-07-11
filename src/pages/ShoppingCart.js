@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import CartItem from '../components/CartItem';
 
 class ShoppingCart extends Component {
   render() {
-    const { cartItems, quantity } = this.props;
+    const { cartItems } = this.props;
 
     return (
       <div className="ShoppingCart">
@@ -11,16 +12,15 @@ class ShoppingCart extends Component {
           ? (
             <div>
               {
-                cartItems.map(({ title, thumbnail, price }, idx) => (
-                  <div key={ idx }>
-                    <h3 data-testid="shopping-cart-product-name">{title}</h3>
-                    <img src={ thumbnail } alt={ title } />
-                    <h3>{ `R$ ${price}` }</h3>
-                    <p data-testid="shopping-cart-product-quantity">
-                      Quantidade:
-                      { quantity }
-                    </p>
-                  </div>
+                cartItems.map(({ title, thumbnail, price, quantity }, idx) => (
+                  <CartItem
+                    key={ idx }
+                    idx={ idx }
+                    title={ title }
+                    thumbnail={ thumbnail }
+                    price={ price }
+                    quantity={ quantity }
+                  />
                 ))
               }
             </div>
@@ -37,7 +37,6 @@ class ShoppingCart extends Component {
 
 ShoppingCart.propTypes = {
   cartItems: PropTypes.arrayOf.isRequired,
-  quantity: PropTypes.number.isRequired,
 };
 
 export default ShoppingCart;

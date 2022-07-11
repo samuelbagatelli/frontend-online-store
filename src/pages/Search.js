@@ -90,13 +90,19 @@ class Search extends React.Component {
           <section className="Search_products">
             { stateProductsQuery !== ''
               && stateProductsQuery
-                .map(({ title, thumbnail, price, id }) => (<ProductsQuery
-                  key={ id }
-                  title={ title }
-                  thumbnail={ thumbnail }
-                  price={ price }
-                  addToCart={ () => addToCart('', title, thumbnail, price) }
-                />)) }
+                .map(({ title, thumbnail, price, id }) => {
+                  const quantity = 1;
+
+                  return (<ProductsQuery
+                    key={ id }
+                    title={ title }
+                    thumbnail={ thumbnail }
+                    price={ price }
+                    addToCart={
+                      () => addToCart('', { title, thumbnail, price, quantity })
+                    }
+                  />);
+                })}
           </section>
           { totalProducts === 0 && <p>Nenhum produto foi encontrado</p> }
         </section>

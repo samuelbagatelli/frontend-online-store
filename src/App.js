@@ -11,29 +11,42 @@ class App extends React.Component {
 
     this.state = {
       cartItems: [],
-      quantity: 1,
     };
   }
 
-  addToCart = (_event, title, thumbnail, price) => {
-    const { cartItems, quantity } = this.state;
+  addToCart = (_event, { title, thumbnail, price, quantity }) => {
+    const { cartItems } = this.state;
 
-    this.setState({ cartItems: [...cartItems, {
-      title,
-      thumbnail,
-      price,
-    }],
-    }, () => {
-      const teste = cartItems.some((element) => element.title === title);
+    const validation = cartItems.some((element) => element.title === title);
 
-      if (teste) {
-        this.setState({ quantity: quantity + 1 });
-      }
-    });
+    if (validation) {
+      cartItems.forEach((element) => {
+        if (element.title === title) {
+          element.quantity += 1;
+        }
+      });
+    } else {
+      this.setState({ cartItems: [...cartItems, {
+        title,
+        thumbnail,
+        price,
+        quantity,
+      }],
+      });
+    }
   }
 
+  // handleRemove = () => {
+  //   const { quantity, cartItems } = this.state;
+
+  //   this.setState({ quantity: quantity - 1 }, () => {
+  //     quantity <= 0
+  //     && cartItems
+  //   });
+  // }
+
   render() {
-    const { cartItems, quantity } = this.state;
+    const { cartItems } = this.state;
 
     return (
       <div className="App">
@@ -42,7 +55,7 @@ class App extends React.Component {
             <Route path="/shopping-cart">
               <ShoppingCart
                 cartItems={ cartItems }
-                quantity={ quantity }
+                handleRemove={ this.handleRemove }
               />
             </Route>
             <Route exact path="/">
