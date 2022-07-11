@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Categories from '../components/Categories';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 
+import '../styles/Search.css';
+
 import ProductsQuery from '../components/ProductQuery';
 
 class Search extends React.Component {
@@ -50,45 +52,53 @@ class Search extends React.Component {
     const { inputValue, stateProductsQuery, totalProducts } = this.state;
 
     return (
-      <div>
-        <Categories setStateProductsFromCategory={ this.setStateProductsFromCategory } />
+      <div className="Search">
+        <section className="Search_categories">
+          <Categories
+            setStateProductsFromCategory={ this.setStateProductsFromCategory }
+          />
+        </section>
         {/* coloquei o component aqui para renderizar e passar o teste.  */}
-        <input
-          data-testid="query-input"
-          onChange={ this.handleInput }
-        />
-        <button
-          type="button"
-          data-testid="query-button"
-          onClick={ this.setStateProductsFromQuery }
-        >
-          Pesquisar
-        </button>
-        { inputValue
-          ? <p>testeTru</p>
-          : (
-            <p data-testid="home-initial-message">
-              Digite algum termo de pesquisa ou escolha uma categoria.
-            </p>
-          )}
-
-        <button type="button">
-          <Link
-            to="/shopping-cart"
-            data-testid="shopping-cart-button"
+        <section className="Search_main">
+          <input
+            data-testid="query-input"
+            onChange={ this.handleInput }
+          />
+          <button
+            type="button"
+            data-testid="query-button"
+            onClick={ this.setStateProductsFromQuery }
           >
-            Carrinho
-          </Link>
-        </button>
-        { stateProductsQuery !== ''
-          && stateProductsQuery
-            .map(({ title, thumbnail, price, id }) => (<ProductsQuery
-              key={ id }
-              title={ title }
-              thumbnail={ thumbnail }
-              price={ price }
-            />)) }
-        { totalProducts === 0 && <p>Nenhum produto foi encontrado</p> }
+            Pesquisar
+          </button>
+          { inputValue
+            ? <p>testeTru</p>
+            : (
+              <p data-testid="home-initial-message">
+                Digite algum termo de pesquisa ou escolha uma categoria.
+              </p>
+            )}
+
+          <button type="button">
+            <Link
+              to="/shopping-cart"
+              data-testid="shopping-cart-button"
+            >
+              Carrinho
+            </Link>
+          </button>
+          <section className="Search_products">
+            { stateProductsQuery !== ''
+              && stateProductsQuery
+                .map(({ title, thumbnail, price, id }) => (<ProductsQuery
+                  key={ id }
+                  title={ title }
+                  thumbnail={ thumbnail }
+                  price={ price }
+                />)) }
+          </section>
+          { totalProducts === 0 && <p>Nenhum produto foi encontrado</p> }
+        </section>
       </div>
     );
   }

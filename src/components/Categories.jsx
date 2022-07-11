@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
+import '../styles/Categories.css';
+
 class Categories extends React.Component {
   constructor(props) {
     super(props);
@@ -33,20 +35,22 @@ class Categories extends React.Component {
     return (
       <div>
         <h2>Categorias:</h2>
-        {
-          categories.map(({ name, id }) => (
-            <label key={ id } htmlFor={ id }>
-              <input
-                type="radio"
-                data-testid="category"
-                id={ id }
-                name="categories"
-                onChange={ () => { this.handleChange(id); } }
-              />
-              {name}
-            </label>
-          ))
-        }
+        <section className="Categories">
+          {
+            categories.map(({ name, id }) => (
+              <label className="Categories_itens" key={ id } htmlFor={ id }>
+                <input
+                  type="radio"
+                  data-testid="category"
+                  id={ id }
+                  name="categories"
+                  onChange={ () => { this.handleChange(id); } }
+                />
+                {name}
+              </label>
+            ))
+          }
+        </section>
         {
           category && category.map(({ title, price, thumbnail, id }) => (
             <div
