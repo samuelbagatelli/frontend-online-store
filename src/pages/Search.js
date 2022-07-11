@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Categories from '../components/Categories';
 import { getProductsFromCategoryAndQuery } from '../services/api';
@@ -27,12 +28,13 @@ class Search extends React.Component {
   setStateProductsFromQuery = async () => {
     const { inputValue } = this.state;
     const { results } = await getProductsFromCategoryAndQuery('', inputValue);
-
-    const productsQuery = results.map(({ title, thumbnail, price, id }) => ({
+    // console.log(results);
+    const productsQuery = results.map(({ title, thumbnail, price, id, attributes }) => ({
       title,
       thumbnail,
       price,
       id,
+      attributes,
     }));
 
     this.setState({
@@ -50,7 +52,7 @@ class Search extends React.Component {
 
   render() {
     const { inputValue, stateProductsQuery, totalProducts } = this.state;
-
+    const { setStateApp } = this.props;
     return (
       <div className="Search">
         <section className="Search_categories">
@@ -90,11 +92,13 @@ class Search extends React.Component {
           <section className="Search_products">
             { stateProductsQuery !== ''
               && stateProductsQuery
-                .map(({ title, thumbnail, price, id }) => (<ProductsQuery
+                .map(({ title, thumbnail, price, id, attributes }) => (<ProductsQuery
+                  setStateApp={ setStateApp }
                   key={ id }
                   title={ title }
                   thumbnail={ thumbnail }
                   price={ price }
+                  attributes={ attributes }
                 />)) }
           </section>
           { totalProducts === 0 && <p>Nenhum produto foi encontrado</p> }
@@ -103,5 +107,9 @@ class Search extends React.Component {
     );
   }
 }
+
+Search.propTypes = {
+  setStateApp: PropTypes.func.isRequired,
+};
 
 export default Search;

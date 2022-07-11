@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 
 import '../styles/Categories.css';
@@ -59,10 +60,12 @@ class Categories extends React.Component {
             >
               <img src={ thumbnail } alt={ title } />
               <strong>{price}</strong>
-              <h2>{title}</h2>
-            </div>))
+              <Link to="qualquerlugar">
+                <h2>{`teste ${title}`}</h2>
+              </Link>
+            </div>
+          ))
         }
-
       </div>
 
     );
