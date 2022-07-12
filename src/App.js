@@ -30,6 +30,7 @@ class App extends React.Component {
       id,
       title,
       price,
+      totalPrice: price,
       quantity,
     };
 
@@ -51,7 +52,8 @@ class App extends React.Component {
         const newObjectProduct = {
           id: idProduct,
           title: titleProduct,
-          price: newPrice.toFixed(2),
+          price: priceProduct,
+          totalPrice: newPrice.toFixed(2),
           quantity: newQuantity,
         };
 
