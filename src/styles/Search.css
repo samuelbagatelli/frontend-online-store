@@ -21,7 +21,7 @@
   width: 100%;
 }
 
-.Search_products div {
+.Search_products a {
   background-color: #999;
   border-radius: 10%;
   width: 30%;

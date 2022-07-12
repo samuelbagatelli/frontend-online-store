@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Categories from '../components/Categories';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import '../styles/Search.css';
@@ -26,12 +26,12 @@ class Search extends React.Component {
   setStateProductsFromQuery = async () => {
     const { inputValue } = this.state;
     const { results } = await getProductsFromCategoryAndQuery('', inputValue);
-
-    const productsQuery = results.map(({ title, thumbnail, price, id }) => ({
+    const productsQuery = results.map(({ title, thumbnail, price, id, attributes }) => ({
       title,
       thumbnail,
       price,
       id,
+      attributes,
     }));
 
     this.setState({
@@ -49,8 +49,7 @@ class Search extends React.Component {
 
   render() {
     const { inputValue, stateProductsQuery, totalProducts } = this.state;
-    const { addToCart } = this.props;
-
+    const { setStateApp } = this.props;
     return (
       <div className="Search">
         <section className="Search_categories">
@@ -90,19 +89,15 @@ class Search extends React.Component {
           <section className="Search_products">
             { stateProductsQuery !== ''
               && stateProductsQuery
-                .map(({ title, thumbnail, price, id }) => {
-                  const quantity = 1;
-
-                  return (<ProductsQuery
-                    key={ id }
-                    title={ title }
-                    thumbnail={ thumbnail }
-                    price={ price }
-                    addToCart={
-                      () => addToCart('', { title, thumbnail, price, quantity })
-                    }
-                  />);
-                })}
+                .map(({ title, thumbnail, price, id, attributes }) => (<ProductsQuery
+                  key={ id }
+                  setStateApp={ setStateApp }
+                  title={ title }
+                  thumbnail={ thumbnail }
+                  price={ price }
+                  attributes={ attributes }
+                  id={ id }
+                />)) }
           </section>
           { totalProducts === 0 && <p>Nenhum produto foi encontrado</p> }
         </section>
@@ -112,7 +107,7 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-  addToCart: PropTypes.func.isRequired,
+  setStateApp: PropTypes.func.isRequired,
 };
 
 export default Search;

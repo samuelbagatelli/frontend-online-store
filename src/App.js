@@ -4,54 +4,80 @@ import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import Search from './pages/Search';
 import Categories from './components/Categories';
 import ShoppingCart from './pages/ShoppingCart';
+import ProductDetail from './components/ProductDetail';
 
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      cartItems: [],
+      productDetail: [],
+      productAddCart: [],
     };
   }
 
-  addToCart = (_event, { title, thumbnail, price, quantity }) => {
-    const { cartItems } = this.state;
+  setStateApp = (...param) => {
+    const [title, thumbnail, price, id, attributes] = param;
+    this.setState({ productDetail: [title, thumbnail, price, id, attributes] });
+  }
 
-    const validation = cartItems.some((element) => element.title === title);
+  setStateCart = (id, title, price, quantity) => {
+    const { productAddCart } = this.state;
 
-    if (validation) {
-      cartItems.forEach((element) => {
-        if (element.title === title) {
-          element.quantity += 1;
-        }
-      });
+    const verifyItens = productAddCart.some(({ id: idProduct }) => idProduct === id);
+
+    const object = {
+      id,
+      title,
+      price,
+      quantity,
+    };
+
+    if (!verifyItens) {
+      this.setState((prevState) => ({
+        productAddCart: [...prevState.productAddCart, object],
+      }));
     } else {
-      this.setState({ cartItems: [...cartItems, {
-        title,
-        thumbnail,
-        price,
-        quantity,
-      }],
+      const newState = productAddCart.map((product) => {
+        const {
+          id: idProduct,
+          title: titleProduct,
+          price: priceProduct,
+          quantity: quantityProduct } = product;
+
+        const newQuantity = idProduct === id ? quantityProduct + 1 : quantityProduct;
+        const newPrice = priceProduct * newQuantity;
+
+        const newObjectProduct = {
+          id: idProduct,
+          title: titleProduct,
+          price: newPrice.toFixed(2),
+          quantity: newQuantity,
+        };
+
+        return newObjectProduct;
       });
+
+      this.setState({ productAddCart: newState });
     }
   }
 
   render() {
-    const { cartItems } = this.state;
-
+    const { productDetail, productAddCart } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
           <Switch>
             <Route path="/shopping-cart">
-              <ShoppingCart
-                cartItems={ cartItems }
-                handleRemove={ this.handleRemove }
-              />
+              <ShoppingCart productAddCart={ productAddCart } />
             </Route>
             <Route exact path="/">
-              <Search
-                addToCart={ this.addToCart }
+              <Search setStateApp={ this.setStateApp } />
+            </Route>
+            <Route path="/product-detail">
+              <ProductDetail
+                productDetail={ productDetail }
+                setStateCart={ this.setStateCart }
               />
             </Route>
             <Categories />
