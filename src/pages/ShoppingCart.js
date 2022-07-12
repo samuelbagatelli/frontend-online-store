@@ -17,14 +17,14 @@ class ShoppingCart extends Component {
     return (
       <div className="ShoppingCart">
         { cartProducts.length || productAddCart.length
-          ? productAddCart.map(({ title, price, quantity }) => (
+          ? productAddCart.map(({ title, totalPrice, quantity }) => (
             <div key={ title }>
               <h3
                 data-testid="shopping-cart-product-name"
               >
                 { title }
               </h3>
-              <p>{ `R$${price}` }</p>
+              <p>{ `R$${totalPrice}` }</p>
               <p
                 data-testid="shopping-cart-product-quantity"
               >
