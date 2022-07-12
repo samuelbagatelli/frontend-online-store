@@ -1,22 +1,13 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class ShoppingCart extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      cartProducts: [],
-    };
-  }
-
   render() {
-    const { cartProducts } = this.state;
     const { productAddCart } = this.props;
     return (
       <div className="ShoppingCart">
-        { cartProducts.length || productAddCart.length
+        { productAddCart.length
           ? productAddCart.map(({ title, totalPrice, quantity }) => (
             <div key={ title }>
               <h3

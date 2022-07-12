@@ -71,10 +71,15 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route path="/shopping-cart">
-              <ShoppingCart productAddCart={ productAddCart } />
+              <ShoppingCart
+                productAddCart={ productAddCart }
+              />
             </Route>
             <Route exact path="/">
-              <Search setStateApp={ this.setStateApp } />
+              <Search
+                setStateApp={ this.setStateApp }
+                setStateCart={ this.setStateCart }
+              />
             </Route>
             <Route path="/product-detail">
               <ProductDetail
