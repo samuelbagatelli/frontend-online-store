@@ -93,12 +93,13 @@ class Search extends React.Component {
             { stateProductsQuery !== ''
               && stateProductsQuery
                 .map(({ title, thumbnail, price, id, attributes }) => (<ProductsQuery
-                  setStateApp={ setStateApp }
                   key={ id }
+                  setStateApp={ setStateApp }
                   title={ title }
                   thumbnail={ thumbnail }
                   price={ price }
                   attributes={ attributes }
+                  id={ id }
                 />)) }
           </section>
           { totalProducts === 0 && <p>Nenhum produto foi encontrado</p> }

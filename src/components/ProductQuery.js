@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 
 class ProductsQuery extends React.Component {
   render() {
-    const { title, thumbnail, price, attributes, setStateApp } = this.props;
+    const { title, thumbnail, price, attributes, id, setStateApp } = this.props;
     return (
       <Link
         data-testid="product-detail-link"
         to="/product-detail"
-        onClick={ () => setStateApp(title, thumbnail, price, attributes) }
+        onClick={ () => setStateApp(title, thumbnail, price, attributes, id) }
       >
         <div
           data-testid="product"
@@ -27,6 +27,7 @@ class ProductsQuery extends React.Component {
 ProductsQuery.propTypes = {
   title: PropTypes.string.isRequired,
   thumbnail: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   setStateApp: PropTypes.func.isRequired,
   attributes: PropTypes.arrayOf.isRequired,
