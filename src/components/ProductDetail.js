@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Rating from './Rating';
 
 class ProductDetail extends React.Component {
   render() {
-    const { productDetail, setStateCart } = this.props;
+    const { productDetail, setStateCart, handleProductRating } = this.props;
     const [title, thumbnail, price, attributes, id] = productDetail;
-
     const UM_ITEM = 1;
 
     return (
@@ -34,6 +34,7 @@ class ProductDetail extends React.Component {
             Ir para Carrinho de compras
           </button>
         </Link>
+        <Rating handleProductRating={ handleProductRating } />
       </div>
     );
   }
@@ -42,6 +43,7 @@ class ProductDetail extends React.Component {
 ProductDetail.propTypes = {
   productDetail: PropTypes.arrayOf.isRequired,
   setStateCart: PropTypes.func.isRequired,
+  handleProductRating: PropTypes.func.isRequired,
 };
 
 export default ProductDetail;

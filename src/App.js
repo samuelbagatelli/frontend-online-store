@@ -13,6 +13,7 @@ class App extends React.Component {
     this.state = {
       productDetail: [],
       productAddCart: [],
+      productRating: [],
     };
   }
 
@@ -64,6 +65,12 @@ class App extends React.Component {
     }
   }
 
+  handleProductRating = (newObjectRating) => {
+    this.setState((prevState) => ({
+      productRating: [...prevState.productRating, newObjectRating],
+    }));
+  }
+
   render() {
     const { productDetail, productAddCart } = this.state;
     return (
@@ -80,6 +87,7 @@ class App extends React.Component {
               <ProductDetail
                 productDetail={ productDetail }
                 setStateCart={ this.setStateCart }
+                handleProductRating={ this.handleProductRating }
               />
             </Route>
             <Categories />
