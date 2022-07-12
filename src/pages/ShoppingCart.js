@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 
 class ShoppingCart extends Component {
   render() {
-    const { cartProducts } = this.state;
     const { productAddCart } = this.props;
     return (
       <div className="ShoppingCart">
-        { cartProducts.length || productAddCart.length
+        { productAddCart.length
           ? productAddCart.map(({ title, price, quantity }) => (
             <div key={ title }>
               <h3

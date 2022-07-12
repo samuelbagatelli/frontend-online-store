@@ -49,7 +49,8 @@ class Search extends React.Component {
 
   render() {
     const { inputValue, stateProductsQuery, totalProducts } = this.state;
-    const { setStateApp } = this.props;
+    const { setStateApp, setStateCart } = this.props;
+
     return (
       <div className="Search">
         <section className="Search_categories">
@@ -92,6 +93,7 @@ class Search extends React.Component {
                 .map(({ title, thumbnail, price, id, attributes }) => (<ProductsQuery
                   key={ id }
                   setStateApp={ setStateApp }
+                  setStateCart={ setStateCart }
                   title={ title }
                   thumbnail={ thumbnail }
                   price={ price }
@@ -108,6 +110,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   setStateApp: PropTypes.func.isRequired,
+  setStateCart: PropTypes.func.isRequired,
 };
 
 export default Search;
