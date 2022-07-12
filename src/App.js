@@ -36,15 +36,6 @@ class App extends React.Component {
     }
   }
 
-  // handleRemove = () => {
-  //   const { quantity, cartItems } = this.state;
-
-  //   this.setState({ quantity: quantity - 1 }, () => {
-  //     quantity <= 0
-  //     && cartItems
-  //   });
-  // }
-
   render() {
     const { cartItems } = this.state;
 
