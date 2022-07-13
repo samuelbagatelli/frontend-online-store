@@ -13,17 +13,25 @@ class Rating extends React.Component {
   }
 
   handleInput = ({ target: { value, type } }, index) => {
-    // console.log(value, type, index);
     const newValue = type === 'checkbox' ? index + 1 : value;
     this.setState({
       [type]: newValue,
     });
   }
 
+  confirmEmail = () => {
+    const { email } = this.state;
+    const { handleProductRating } = this.props;
+
+    if (email !== '') {
+      handleProductRating(this.state);
+    }
+  }
+
   render() {
     const { checkbox } = this.state;
     const STARS_RATING = ['nota1', 'nota2', 'nota3', 'nota4', 'nota5'];
-    const { handleProductRating } = this.props;
+    const { productRating } = this.props;
     return (
       <div>
         <input
@@ -35,7 +43,7 @@ class Rating extends React.Component {
         <section>
           { STARS_RATING.map((value, index) => (
             <input
-              data-testid={ `${index}-rating` }
+              data-testid={ `${index + 1}-rating` }
               key={ index }
               type="checkbox"
               checked={ index < checkbox }
@@ -54,11 +62,29 @@ class Rating extends React.Component {
           <button
             data-testid="submit-review-btn"
             type="button"
-            onClick={ () => handleProductRating(this.state) }
+            onClick={ this.confirmEmail }
           >
             Enviar Avaliação
           </button>
         </div>
+
+        <h3>Avaliaçoes</h3>
+        {productRating.map(({ email, checkbox: checkboxRating, textarea }) => (
+          <div key={ email }>
+            <p>{email}</p>
+            <section>
+              { STARS_RATING.map((value, index) => (
+                <input
+                  key={ index }
+                  type="checkbox"
+                  checked={ index < checkboxRating }
+                  onChange={ (event) => this.handleInput(event, index) }
+                />
+              )) }
+            </section>
+            <p>{textarea}</p>
+          </div>
+        ))}
       </div>
     );
   }
@@ -66,6 +92,7 @@ class Rating extends React.Component {
 
 Rating.propTypes = {
   handleProductRating: PropTypes.func.isRequired,
+  productRating: PropTypes.arrayOf.isRequired,
 };
 
 export default Rating;

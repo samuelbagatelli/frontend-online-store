@@ -72,7 +72,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { productDetail, productAddCart } = this.state;
+    const { productDetail, productAddCart, productRating } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
@@ -88,6 +88,7 @@ class App extends React.Component {
                 productDetail={ productDetail }
                 setStateCart={ this.setStateCart }
                 handleProductRating={ this.handleProductRating }
+                productRating={ productRating }
               />
             </Route>
             <Categories />
