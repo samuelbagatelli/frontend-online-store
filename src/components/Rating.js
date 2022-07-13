@@ -35,8 +35,8 @@ class Rating extends React.Component {
     const STARS_RATING = ['nota1', 'nota2', 'nota3', 'nota4', 'nota5'];
     const { productRating, id } = this.props;
 
-    const filterRatingProductId = productRating !== []
-    && productRating.filter(({ id: productId }) => productId === id);
+    // const filterRatingProductId = productRating !== []
+    // && productRating.filter(({ id: productId }) => productId === id);
 
     return (
       <div>
@@ -75,7 +75,7 @@ class Rating extends React.Component {
         </div>
 
         <h3>Avaliações</h3>
-        {filterRatingProductId.map(({ email, checkbox: checkboxRating, textarea }) => (
+        {productRating.map(({ email, checkbox: checkboxRating, textarea }) => (
           <div key={ email }>
             {email}
             <section>
@@ -84,7 +84,6 @@ class Rating extends React.Component {
                   key={ index }
                   type="checkbox"
                   checked={ index < checkboxRating }
-                  onChange={ (event) => this.handleInput(event, index) }
                 />
               )) }
             </section>

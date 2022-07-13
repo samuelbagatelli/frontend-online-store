@@ -69,6 +69,13 @@ class App extends React.Component {
     this.setState((prevState) => ({
       productRating: [...prevState.productRating, newObjectRating],
     }));
+    const teste = JSON.stringify(newObjectRating);
+    localStorage.setItem('rating', teste);
+  }
+
+  componentDidMount= () => {
+    const storage = JSON.parse(localStorage.getItem('rating'));
+    if (storage) { this.setState({ productRating: [storage] }); }
   }
 
   render() {
