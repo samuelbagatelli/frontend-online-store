@@ -6,15 +6,17 @@ class Rating extends React.Component {
     super();
 
     this.state = {
+      id: '',
       email: '',
       checkbox: 0,
       textarea: '',
     };
   }
 
-  handleInput = ({ target: { value, type } }, index) => {
+  handleInput = ({ target: { value, type } }, idProduct, index) => {
     const newValue = type === 'checkbox' ? index + 1 : value;
     this.setState({
+      id: idProduct,
       [type]: newValue,
     });
   }
@@ -31,14 +33,18 @@ class Rating extends React.Component {
   render() {
     const { checkbox } = this.state;
     const STARS_RATING = ['nota1', 'nota2', 'nota3', 'nota4', 'nota5'];
-    const { productRating } = this.props;
+    const { productRating, id } = this.props;
+
+    const filterRatingProductId = productRating !== []
+    && productRating.filter(({ id: productId }) => productId === id);
+
     return (
       <div>
         <input
           data-testid="product-detail-email"
           type="email"
           placeholder="Digite seu email"
-          onChange={ this.handleInput }
+          onChange={ (event) => this.handleInput(event, id) }
         />
         <section>
           { STARS_RATING.map((value, index) => (
@@ -47,7 +53,7 @@ class Rating extends React.Component {
               key={ index }
               type="checkbox"
               checked={ index < checkbox }
-              onChange={ (event) => this.handleInput(event, index) }
+              onChange={ (event) => this.handleInput(event, id, index) }
             />
           )) }
         </section>
@@ -55,7 +61,7 @@ class Rating extends React.Component {
           <textarea
             data-testid="product-detail-evaluation"
             type="textarea"
-            onChange={ this.handleInput }
+            onChange={ (event) => this.handleInput(event, id) }
           />
         </div>
         <div>
@@ -68,10 +74,10 @@ class Rating extends React.Component {
           </button>
         </div>
 
-        <h3>Avaliaçoes</h3>
-        {productRating.map(({ email, checkbox: checkboxRating, textarea }) => (
+        <h3>Avaliações</h3>
+        {filterRatingProductId.map(({ email, checkbox: checkboxRating, textarea }) => (
           <div key={ email }>
-            <p>{email}</p>
+            {email}
             <section>
               { STARS_RATING.map((value, index) => (
                 <input
@@ -93,6 +99,7 @@ class Rating extends React.Component {
 Rating.propTypes = {
   handleProductRating: PropTypes.func.isRequired,
   productRating: PropTypes.arrayOf.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Rating;

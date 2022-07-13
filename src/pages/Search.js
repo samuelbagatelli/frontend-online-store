@@ -28,7 +28,7 @@ class Search extends React.Component {
   setStateProductsFromQuery = async () => {
     const { inputValue } = this.state;
     const { results } = await getProductsFromCategoryAndQuery('', inputValue);
-    // console.log(results);
+    console.log(results);
     const productsQuery = results.map(({ title, thumbnail, price, id, attributes }) => ({
       title,
       thumbnail,

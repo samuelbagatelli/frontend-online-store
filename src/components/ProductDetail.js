@@ -19,11 +19,14 @@ class ProductDetail extends React.Component {
         <h3>{ title }</h3>
         <img src={ thumbnail } alt={ title } />
         <h3>{ `R$ ${price}` }</h3>
-        {/* <div>
-          { attributes.map(({ name, value_name: valueName, id: idProduct }) => (
-            <p key={ idProduct }>{`${name}: ${valueName}`}</p>
+        <div>
+          { attributes !== undefined
+          && attributes.map(({ name, value_name: valueName, id: idProduct }) => (
+            <p key={ idProduct }>
+              {`${name}: ${valueName}`}
+            </p>
           )) }
-        </div> */}
+        </div>
         <button
           data-testid="product-detail-add-to-cart"
           type="button"
@@ -40,6 +43,7 @@ class ProductDetail extends React.Component {
           </button>
         </Link>
         <Rating
+          id={ id }
           handleProductRating={ handleProductRating }
           productRating={ productRating }
         />
