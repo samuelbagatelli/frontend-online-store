@@ -13,10 +13,14 @@ class Rating extends React.Component {
     };
   }
 
-  handleInput = ({ target: { value, type } }, idProduct, index) => {
+  componentDidMount = () => {
+    const { id } = this.props;
+    this.setState({ id });
+  }
+
+  handleInput = ({ target: { value, type } }, index) => {
     const newValue = type === 'checkbox' ? index + 1 : value;
     this.setState({
-      id: idProduct,
       [type]: newValue,
     });
   }
@@ -33,7 +37,7 @@ class Rating extends React.Component {
   render() {
     const { checkbox } = this.state;
     const STARS_RATING = ['nota1', 'nota2', 'nota3', 'nota4', 'nota5'];
-    const { productRating, id } = this.props;
+    const { productRating } = this.props;
 
     // const filterRatingProductId = productRating !== []
     // && productRating.filter(({ id: productId }) => productId === id);
@@ -44,7 +48,7 @@ class Rating extends React.Component {
           data-testid="product-detail-email"
           type="email"
           placeholder="Digite seu email"
-          onChange={ (event) => this.handleInput(event, id) }
+          onChange={ (event) => this.handleInput(event) }
         />
         <section>
           { STARS_RATING.map((value, index) => (
@@ -53,7 +57,7 @@ class Rating extends React.Component {
               key={ index }
               type="checkbox"
               checked={ index < checkbox }
-              onChange={ (event) => this.handleInput(event, id, index) }
+              onChange={ (event) => this.handleInput(event, index) }
             />
           )) }
         </section>
@@ -61,7 +65,7 @@ class Rating extends React.Component {
           <textarea
             data-testid="product-detail-evaluation"
             type="textarea"
-            onChange={ (event) => this.handleInput(event, id) }
+            onChange={ (event) => this.handleInput(event) }
           />
         </div>
         <div>
