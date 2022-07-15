@@ -13,6 +13,7 @@ class App extends React.Component {
     this.state = {
       productDetail: [],
       productAddCart: [],
+      productRating: [],
     };
   }
 
@@ -64,8 +65,21 @@ class App extends React.Component {
     }
   }
 
+  handleProductRating = (newObjectRating) => {
+    this.setState((prevState) => ({
+      productRating: [...prevState.productRating, newObjectRating],
+    }));
+    const teste = JSON.stringify(newObjectRating);
+    localStorage.setItem('rating', teste);
+  }
+
+  componentDidMount= () => {
+    const storage = JSON.parse(localStorage.getItem('rating'));
+    if (storage) { this.setState({ productRating: [storage] }); }
+  }
+
   render() {
-    const { productDetail, productAddCart } = this.state;
+    const { productDetail, productAddCart, productRating } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
@@ -85,6 +99,8 @@ class App extends React.Component {
               <ProductDetail
                 productDetail={ productDetail }
                 setStateCart={ this.setStateCart }
+                handleProductRating={ this.handleProductRating }
+                productRating={ productRating }
               />
             </Route>
             <Categories />

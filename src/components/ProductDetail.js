@@ -1,12 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Rating from './Rating';
 
 class ProductDetail extends React.Component {
   render() {
-    const { productDetail, setStateCart } = this.props;
-    const [title, thumbnail, price, attributes, id] = productDetail;
+    const {
+      productDetail,
+      setStateCart,
+      handleProductRating,
+      productRating } = this.props;
 
+    const [title, thumbnail, price, attributes, id] = productDetail;
     const UM_ITEM = 1;
 
     return (
@@ -15,8 +20,11 @@ class ProductDetail extends React.Component {
         <img src={ thumbnail } alt={ title } />
         <h3>{ `R$ ${price}` }</h3>
         <div>
-          { attributes.map(({ name, value_name: valueName, id: idProduct }) => (
-            <p key={ idProduct }>{`${name}: ${valueName}`}</p>
+          { attributes !== undefined
+          && attributes.map(({ name, value_name: valueName, id: idProduct }) => (
+            <p key={ idProduct }>
+              {`${name}: ${valueName}`}
+            </p>
           )) }
         </div>
         <button
@@ -34,6 +42,11 @@ class ProductDetail extends React.Component {
             Ir para Carrinho de compras
           </button>
         </Link>
+        <Rating
+          id={ id }
+          handleProductRating={ handleProductRating }
+          productRating={ productRating }
+        />
       </div>
     );
   }
@@ -42,6 +55,8 @@ class ProductDetail extends React.Component {
 ProductDetail.propTypes = {
   productDetail: PropTypes.arrayOf.isRequired,
   setStateCart: PropTypes.func.isRequired,
+  handleProductRating: PropTypes.func.isRequired,
+  productRating: PropTypes.arrayOf.isRequired,
 };
 
 export default ProductDetail;
